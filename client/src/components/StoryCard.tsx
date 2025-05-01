@@ -1,58 +1,45 @@
-/**
- * Story card component for the web application
- */
-
-import React from 'react';
-import { Link } from 'wouter';
-import { StoryWithDetails } from '../utils/types';
+import { Link } from "wouter";
+import { StoryWithDetails } from "@/types";
 
 interface StoryCardProps {
   story: StoryWithDetails;
-  compact?: boolean;
 }
 
-export default function StoryCard({ story, compact = false }: StoryCardProps) {
+export default function StoryCard({ story }: StoryCardProps) {
   return (
-    <div className={`bg-white rounded-lg shadow hover:shadow-md transition-shadow ${compact ? 'p-4' : 'p-6'}`}>
-      <Link href={`/story/${story.id}`}>
-        <a className="block">
-          <h3 className={`font-bold text-gray-900 hover:text-orange-500 ${compact ? 'text-base mb-2' : 'text-lg mb-3'}`}>
-            {story.title}
-          </h3>
-        </a>
-      </Link>
-      
-      <div className="flex items-center text-sm text-gray-500 mb-2">
-        <span className="mr-3">{story.score} points</span>
-        <span className="mr-3">by {story.by}</span>
-        <span>{story.timeAgo}</span>
-      </div>
-      
-      {story.url && (
-        <a 
-          href={story.url} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-xs text-gray-500 hover:text-blue-500 inline-block mb-3"
-        >
-          {story.domain}
-        </a>
-      )}
-      
-      <div className="flex justify-between items-center">
-        <Link href={`/story/${story.id}`}>
-          <a className="text-sm text-orange-500 hover:text-orange-600 font-medium">
-            {story.descendants} {story.descendants === 1 ? 'comment' : 'comments'}
-          </a>
-        </Link>
-        
-        {!compact && (
-          <Link href={`/story/${story.id}`}>
-            <a className="text-sm text-gray-600 hover:text-orange-500">
-              Read more →
-            </a>
+    <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-shadow duration-300">
+      <div className="p-5">
+        <div className="flex items-center text-sm text-gray-500 mb-2">
+          <span className="mr-3">
+            <i className="fas fa-clock mr-1"></i> {story.timeAgo}
+          </span>
+          <span>
+            <i className="fas fa-comment mr-1"></i> {story.descendants || 0}
+          </span>
+        </div>
+        <h3 className="font-bold text-lg mb-2 leading-tight">
+          <Link href={`/item/${story.id}`}>
+            <a className="text-gray-900 hover:text-primary-600">{story.title}</a>
           </Link>
+        </h3>
+        {story.text && (
+          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+            <span dangerouslySetInnerHTML={{ __html: story.text }}></span>
+          </p>
         )}
+        <div className="flex items-center justify-between mt-2">
+          {story.url && (
+            <span className="text-primary-700 text-sm">{story.domain}</span>
+          )}
+          <div className="flex items-center space-x-3">
+            <span className="flex items-center text-sm text-gray-600">
+              <i className="fas fa-arrow-up mr-1 text-green-500"></i> {story.score}
+            </span>
+            <button className="text-gray-500 hover:text-gray-700 text-sm">
+              <i className="far fa-bookmark"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

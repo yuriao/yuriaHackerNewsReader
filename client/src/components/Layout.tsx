@@ -1,29 +1,26 @@
-/**
- * Layout component for the web application
- */
-
-import React, { ReactNode } from 'react';
-import Header from './Header';
-import Footer from './Footer';
-import MobileMenu from './MobileMenu';
+import { ReactNode, useState } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+import MobileMenu from "./MobileMenu";
+import CategoryTabs from "./CategoryTabs";
 
 interface LayoutProps {
   children: ReactNode;
-  toggleMobileMenu: () => void;
-  mobileMenuOpen: boolean;
 }
 
-export default function Layout({ children, toggleMobileMenu, mobileMenuOpen }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="flex flex-col min-h-screen">
       <Header toggleMobileMenu={toggleMobileMenu} />
-      
-      <MobileMenu isOpen={mobileMenuOpen} />
-      
-      <main className="flex-grow container mx-auto px-4 py-6">
-        {children}
-      </main>
-      
+      <MobileMenu isOpen={isMobileMenuOpen} />
+      <CategoryTabs />
+      {children}
       <Footer />
     </div>
   );

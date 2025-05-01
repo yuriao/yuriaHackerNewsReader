@@ -4,8 +4,8 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchStories } from '../utils/api';
-import { extractTopicsFromStories } from '../utils/topicExtractor';
+import { fetchStories } from '../../../shared/api';
+import { extractTopicsFromStories } from '../../../shared/topicExtractor';
 import StoryCard from '../components/StoryCard';
 import TopicBarChart from '../components/TopicBarChart';
 
@@ -96,7 +96,7 @@ export default function HomePage() {
           ) : (
             <div className="space-y-4">
               {newStories?.slice(0, 4).map(story => (
-                <StoryCard key={story.id} story={story} compact />
+                <StoryCard key={story.id} story={story} />
               ))}
             </div>
           )}
@@ -115,7 +115,7 @@ export default function HomePage() {
           ) : (
             <div className="space-y-4">
               {askStories?.slice(0, 4).map(story => (
-                <StoryCard key={story.id} story={story} compact />
+                <StoryCard key={story.id} story={story} />
               ))}
             </div>
           )}

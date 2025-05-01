@@ -1,35 +1,26 @@
-/**
- * Web application main component
- */
+import { Route, Switch } from "wouter";
+import { Toaster } from "@/components/ui/toaster";
+import NotFound from "@/pages/not-found";
+import Home from "@/pages/Home";
+import StoriesPage from "@/pages/StoriesPage";
+import StoryDetailPage from "@/pages/StoryDetailPage";
+import Layout from "@/components/Layout";
+import { AuthProvider } from "@/lib/userContext";
 
-import React, { useState } from 'react';
-import { Route, Switch } from 'wouter';
-import Layout from './components/Layout';
-import HomePage from './pages/HomePage';
-import StoriesPage from './pages/StoriesPage';
-import StoryDetailPage from './pages/StoryDetailPage';
-import NotFoundPage from './pages/NotFoundPage';
-import { StoryType } from './utils/types';
-
-export default function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
+function App() {
   return (
-    <Layout toggleMobileMenu={toggleMobileMenu} mobileMenuOpen={mobileMenuOpen}>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/stories/:type">
-          {params => <StoriesPage type={params.type as StoryType} />}
-        </Route>
-        <Route path="/story/:id">
-          {params => <StoryDetailPage id={parseInt(params.id, 10)} />}
-        </Route>
-        <Route component={NotFoundPage} />
-      </Switch>
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/stories/:type" component={StoriesPage} />
+          <Route path="/item/:id" component={StoryDetailPage} />
+          <Route component={NotFound} />
+        </Switch>
+        <Toaster />
+      </Layout>
+    </AuthProvider>
   );
 }
+
+export default App;
