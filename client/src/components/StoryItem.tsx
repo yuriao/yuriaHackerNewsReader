@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Link } from 'wouter';
-import { StoryWithDetails } from '../utils/types';
+import { StoryWithDetails } from '../../../shared/types';
 
 interface StoryItemProps {
   story: StoryWithDetails;
