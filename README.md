@@ -75,6 +75,3 @@ React Native mobile application:
 - **Mobile**: React Native, Expo, TypeScript
 - **Common**: Shared API client, TypeScript, D3.js
 
-## Troubleshooting
-
-If you encounter issues with the mobile application, check the `mobile/TROUBLESHOOTING.md` file for common solutions.
